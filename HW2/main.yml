@@ -1,35 +1,22 @@
 - hosts: all
+- name: manage groups and users
+  hosts: all
   become: yes
   tasks:
+    - name: create devops and qa group
+      group:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - devops
+        - qa
 
-  - name: Update apt package
-    apt:
-      update_cache: yes
-
-  - name: Install unzip
-    apt:
-      name: unzip
-      state: present
-
-  - name: Install MariaDB
-    apt:
-      name: mariadb-server
-      state: present
-  
-  - name: Start and enable MariaDB
-    service:
-      name: mariadb
-      state: started
-      enabled: yes
-
-  - name: Install the latest version of Mariadb and MariaDB-server
-    ansible.builtin.package:
-      name:
-        - mariadb-server 
-      state: latest 
-  
-  - name:  Start and enable service 
-    service: 
-      name: mariadb
-      enabled: true
-      state: started
+    - name: create users
+      user:
+        name: "{{ item.name }}"
+        groups: "{{ item.groups }}"
+        state: present
+      loop:
+      - { name: "galina", groups: "devops" }
+      - { name: "tim", groups: "qa" }
+      - { name: "ann", groups: "qa" }
