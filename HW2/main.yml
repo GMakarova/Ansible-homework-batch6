@@ -1,0 +1,35 @@
+- hosts: all
+  become: yes
+  tasks:
+
+  - name: Update apt package
+    apt:
+      update_cache: yes
+
+  - name: Install unzip
+    apt:
+      name: unzip
+      state: present
+
+  - name: Install MariaDB
+    apt:
+      name: mariadb-server
+      state: present
+  
+  - name: Start and enable MariaDB
+    service:
+      name: mariadb
+      state: started
+      enabled: yes
+
+  - name: Install the latest version of Mariadb and MariaDB-server
+    ansible.builtin.package:
+      name:
+        - mariadb-server 
+      state: latest 
+  
+  - name:  Start and enable service 
+    service: 
+      name: mariadb
+      enabled: true
+      state: started
