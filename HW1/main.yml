@@ -1,0 +1,23 @@
+- hosts: all
+  become: yes
+  tasks:
+
+  - name: Update apt package
+    apt:
+      update_cache: yes
+
+  - name: Install unzip
+    apt:
+      name: unzip
+      state: present
+
+  - name: Install MariaDB
+    apt:
+      name: mariadb-server
+      state: present
+  
+  - name: Start and enable MariaDB
+    service:
+      name: mariadb
+      state: started
+      enabled: yes
