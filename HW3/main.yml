@@ -1,14 +1,22 @@
 - hosts: all
   become: yes
   tasks:
-  - name: Install apache httpd  (state=present is optional)
-    ansible.builtin.apt:
-      name: apache2
+  - name: Install apache httpd (state=present is optiopnal)
+    ansible.builtin.dnf:
+      name: [httpd, git]
       state: present
       update_cache: yes
-    notify: restart apache
+    notify: Install git
+
+  - name: Start httpd service
+    service:
+      name: httpd
+      state: started
+      enabled: yes  
 
   handlers:
-    - name: restart apache
-      service:
-        name: apache2
+  - name: Install git
+    ansible.builtin.dnf:
+      name: httpd
+      state: present
+      update_cache: yes    
