@@ -1,0 +1,20 @@
+- name: Download WordPress
+  get_url:
+    url: "{{ wordpress_url }}"
+    dest: "{{ wordpress_download_dest }}"
+  become: true
+
+- name: Extract WordPress
+  unarchive:
+    src: "{{ wordpress_download_dest }}"
+    dest: "{{ wordpress_install_dest }}"
+    remote_src: yes
+  become: true
+
+- name: Set ownership
+  file:
+    path: "{{ wordpress_install_dest }}"
+    owner: "{{ wordpress_user }}"
+    group: "{{ wordpress_group }}"
+    recurse: yes
+  become: true

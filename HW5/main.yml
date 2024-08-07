@@ -1,5 +1,6 @@
 - hosts: all
   vars:
+    src: /home/ubuntu/Ansible-homework-batch6/HW5
     dest: ./
   become: yes
   tasks:

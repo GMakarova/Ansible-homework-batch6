@@ -1,0 +1,12 @@
+- name: Install Apache
+  apt:
+    name: "{{ apache_package }}"
+    state: present
+  become: true
+
+- name: Ensure Apache is running
+  service:
+    name: "{{ apache_package }}"
+    state: started
+    enabled: true
+  become: true
