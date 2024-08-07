@@ -1,6 +1,6 @@
 - hosts: all
   vars:
-    dest: /mnt
+    dest: ./
   become: yes
   tasks:
   - name: Install and start Apache
