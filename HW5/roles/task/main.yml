@@ -1,0 +1,50 @@
+- name: Install Apache package
+  apt:
+    name: "{{ apache_package }}"
+    state: present
+  become: yes
+
+- name: Ensure Apache service is running
+  service:
+    name: "{{ apache_service }}"
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Install PHP packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ php_packages }}"
+  become: yes
+
+- name: Create WordPress installation directory
+  file:
+    path: "{{ wordpress_installation_dir }}"
+    state: directory
+    owner: "{{ wordpress_user }}"
+    group: "{{ wordpress_group }}"
+    mode: '0755'
+  become: yes
+
+- name: Download WordPress
+  get_url:
+    url: "{{ wordpress_download_url }}"
+    dest: /tmp/wordpress-latest.tar.gz
+  become: yes
+
+- name: Extract WordPress
+  unarchive:
+    src: /tmp/wordpress-latest.tar.gz
+    dest: "{{ wordpress_installation_dir }}"
+    remote_src: yes
+  become: yes
+
+- name: Set ownership of WordPress files
+  file:
+    path: "{{ wordpress_installation_dir }}"
+    state: directory
+    owner: "{{ wordpress_user }}"
+    group: "{{ wordpress_group }}"
+    recurse: yes
+  become: yes
