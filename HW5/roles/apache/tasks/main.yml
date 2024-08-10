@@ -1,5 +1,6 @@
 - name: Install Apache
   apt:
+    update_cache: yes
     name: "{{ apache_package }}"
     state: present
   become: true

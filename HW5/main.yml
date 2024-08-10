@@ -1,11 +1,10 @@
 - hosts: all
   vars:
-    src: /home/ubuntu/Ansible-homework-batch6/HW5
-    dest: ./
+    dest: /tmp
   become: yes
-  tasks:
-  - name: Install and start Apache
-    include: apache.yml
-  - name: Install php
-  - name: Install wordpress
-  - name: Install mysql
+  roles:
+    - apache
+    - mysql
+    - php
+    - wordpress
+
