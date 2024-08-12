@@ -1,3 +1,2 @@
-vm ansible_host=3.147.86.169
-vm1 ansible_host=3.144.176.138 ansible_ssh__user=ec2-user
-wordpress ansible_host=18.118.45.234
+vm1 ansible_host=18.225.234.107
+vm ansible_host=13.58.72.59 ansible_ssh__user=ec2-user
